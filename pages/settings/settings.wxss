@@ -1,0 +1,84 @@
+.settings-panel {
+  padding: 28rpx;
+}
+
+.setting-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 24rpx;
+  padding: 20rpx 0 8rpx;
+}
+
+.setting-copy {
+  flex: 1;
+}
+
+.setting-title {
+  font-size: 32rpx;
+  color: var(--ink);
+}
+
+.setting-desc {
+  margin-top: 10rpx;
+  font-size: 24rpx;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.field-label {
+  margin-top: 24rpx;
+  margin-bottom: 10rpx;
+  font-size: 24rpx;
+  color: var(--muted);
+}
+
+.picker,
+.textarea,
+.input-like {
+  width: 100%;
+  padding: 20rpx;
+  box-sizing: border-box;
+  border-radius: 22rpx;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1rpx solid rgba(31, 42, 53, 0.08);
+  font-size: 28rpx;
+}
+
+.textarea {
+  min-height: 120rpx;
+  line-height: 1.6;
+}
+
+.notes {
+  min-height: 180rpx;
+}
+
+.tips {
+  margin-top: 26rpx;
+  padding: 22rpx;
+  border-radius: 24rpx;
+  background: rgba(31, 58, 95, 0.07);
+}
+
+.tips-title {
+  font-size: 28rpx;
+  color: var(--deep);
+}
+
+.tips-text {
+  margin-top: 12rpx;
+  font-size: 24rpx;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+.save-button {
+  margin-top: 28rpx;
+  height: 92rpx;
+  line-height: 92rpx;
+  border-radius: 999rpx;
+  border: 0;
+  background: linear-gradient(135deg, #23416a, #16243b);
+  color: #fff7e6;
+  font-size: 28rpx;
+}

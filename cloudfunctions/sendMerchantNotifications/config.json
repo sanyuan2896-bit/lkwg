@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "openapi": [
+      "subscribeMessage.send"
+    ]
+  },
+  "triggers": [
+    {
+      "name": "sendMerchantNotificationsTimer",
+      "type": "timer",
+      "config": "30 */5 * * * * *"
+    }
+  ]
+}

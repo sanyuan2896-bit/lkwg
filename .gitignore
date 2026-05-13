@@ -1,0 +1,28 @@
+# Dependencies and build output
+node_modules/
+miniprogram_npm/
+dist/
+build/
+
+# Local caches and generated tool output
+.npm-cache/
+.mcporter-tools.json
+.tmpconfig/
+
+# Local IDE/assistant settings
+.claude/
+.agents/
+config/mcporter.json
+
+# WeChat Developer Tools private settings
+project.private.config.json
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,98 @@
+<view class="page-shell">
+  <view class="hero-card panel">
+    <view class="hero-banner">
+      <view class="banner-scene">
+        <view class="scene-flagpole"></view>
+        <view class="scene-flag"></view>
+        <view class="scene-building left"></view>
+        <view class="scene-building middle"></view>
+        <view class="scene-tree"></view>
+        <view class="scene-rider"></view>
+        <view class="scene-horse"></view>
+      </view>
+    </view>
+
+    <view class="hero-row">
+      <view class="hero-copy">
+        <view class="hero-kicker">洛克王国 / 远行商人</view>
+        <view class="hero-title">远行商人提醒</view>
+        <view class="hero-desc">当前规则是商品数据一更新就提醒，不限定具体商品。支持累计订阅次数，命中后自动扣减。</view>
+      </view>
+      <view class="hero-badges">
+        <view class="hero-badge">{{stageText}}</view>
+        <view class="hero-badge hero-badge-wide">{{rangeText}}</view>
+      </view>
+    </view>
+
+    <view class="hero-stats">
+      <view class="stat-card">
+        <view class="stat-label">距离下次刷新</view>
+        <view class="stat-value">{{countdown}}</view>
+      </view>
+      <view class="stat-card stat-card-accent">
+        <view class="stat-label">下一时段</view>
+        <view class="stat-value">{{nextSlot}}</view>
+      </view>
+    </view>
+
+    <view class="hero-actions">
+      <button class="action-button action-button-ghost" bindtap="selectGoods">商品说明</button>
+      <button class="action-button action-button-accent" bindtap="subscribeReminder">{{subscriptionText}}</button>
+    </view>
+  </view>
+
+  <view class="goods-card panel">
+    <view class="section-head">
+      <view>
+        <view class="section-title">本场商品</view>
+        <view class="source-status">{{sourceStatusText}}</view>
+      </view>
+      <view class="section-pill">更新即提醒</view>
+    </view>
+
+    <block wx:if="{{featuredGoods.length}}">
+      <block wx:for="{{featuredGoods}}" wx:key="name">
+        <view class="goods-item">
+          <view class="goods-visual {{item.tone}}">
+            <image wx:if="{{item.imageDataUrl || item.imageUrl}}" class="goods-image" mode="aspectFit" src="{{item.imageDataUrl || item.imageUrl}}" />
+          </view>
+
+          <view class="goods-meta">
+            <view class="goods-name">{{item.name}}</view>
+            <view class="goods-subline">
+              <view class="goods-limit">{{item.limitText}}</view>
+            </view>
+          </view>
+
+          <view class="goods-side">
+            <view class="goods-price">{{item.priceText}}</view>
+            <view class="goods-remain">
+              <view class="hourglass"></view>
+              <text>{{item.remainText}}</text>
+            </view>
+          </view>
+        </view>
+      </block>
+    </block>
+
+    <view wx:else class="goods-empty">数据更新中</view>
+
+    <view class="ad-card">
+      <view class="ad-copy">
+        <view class="ad-label">广告位</view>
+        <view class="ad-title">{{adCard.title}}</view>
+        <view class="ad-author">
+          <view class="ad-avatar"></view>
+          <text>{{adCard.author}}</text>
+        </view>
+      </view>
+
+      <view class="ad-banner">
+        <view class="ad-star"></view>
+        <view class="ad-figure"></view>
+        <view class="ad-logo">AD SLOT</view>
+        <view class="ad-code">保留</view>
+      </view>
+    </view>
+  </view>
+</view>

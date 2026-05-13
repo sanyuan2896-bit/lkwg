@@ -1,0 +1,15 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/settings/settings"
+  ],
+  "window": {
+    "navigationBarTitleText": "远行商人提醒",
+    "navigationBarBackgroundColor": "#1f3a5f",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#f4efe2",
+    "backgroundTextStyle": "dark"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

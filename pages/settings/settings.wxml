@@ -1,0 +1,73 @@
+<view class="page-shell">
+  <view class="panel settings-panel">
+    <view class="section-title">提醒设置</view>
+
+    <view class="setting-row">
+      <view class="setting-copy">
+        <view class="setting-title">前台提醒</view>
+        <view class="setting-desc">这是本地兜底提醒。真正的微信通知依赖订阅消息和云函数。</view>
+      </view>
+      <switch checked="{{enabled}}" color="#1f3a5f" bindchange="onEnabledChange" />
+    </view>
+
+    <view class="field-label">提前多久提醒</view>
+    <picker mode="selector" range="{{leadMinutesOptions}}" value="{{leadMinutesIndex}}" bindchange="onLeadChange">
+      <view class="picker">{{leadMinutesOptions[leadMinutesIndex]}} 分钟</view>
+    </picker>
+
+    <view class="field-label">刷新时段</view>
+    <textarea
+      class="textarea"
+      maxlength="100"
+      placeholder="例如：08:00, 12:00, 16:00, 20:00"
+      value="{{slotsText}}"
+      bindinput="onSlotsInput"
+    />
+
+    <view class="field-label">页面关键词兜底</view>
+    <textarea
+      class="textarea"
+      maxlength="120"
+      placeholder="例如：国王球, 炫彩蛋, 性格, 秘药"
+      value="{{keywordsText}}"
+      bindinput="onKeywordsInput"
+    />
+
+    <view class="field-label">固定提醒商品</view>
+    <view class="picker input-like">炫彩蛋、棱镜球、血脉秘药</view>
+
+    <view class="field-label">云环境 ID</view>
+    <input
+      class="picker input-like"
+      maxlength="80"
+      placeholder="例如：cloudbase-xxxxxxxx"
+      value="{{cloudEnvId}}"
+      bindinput="onCloudEnvInput"
+    />
+
+    <view class="field-label">订阅消息模板 ID</view>
+    <input
+      class="picker input-like"
+      maxlength="80"
+      placeholder="例如：zwPG3DQvU8Zji6R4..."
+      value="{{templateId}}"
+      bindinput="onTemplateIdInput"
+    />
+
+    <view class="field-label">备注</view>
+    <textarea
+      class="textarea notes"
+      maxlength="300"
+      placeholder="可以记录你的采购策略。"
+      value="{{notes}}"
+      bindinput="onNotesInput"
+    />
+
+    <view class="tips">
+      <view class="tips-title">云开发说明</view>
+      <view class="tips-text">首页点击订阅后会直接拉起微信订阅授权。用户点允许后，小程序会调用云函数创建提醒任务，当前固定提醒炫彩蛋、棱镜球和血脉秘药。</view>
+    </view>
+
+    <button class="save-button" bindtap="saveSettings">保存设置</button>
+  </view>
+</view>

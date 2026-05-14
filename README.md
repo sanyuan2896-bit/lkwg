@@ -4,7 +4,10 @@
 
 小程序会展示当前时间段的远行商人商品，并在商品数据更新时通过微信订阅消息提醒用户。订阅消息按微信规则计次：用户每授权一次，就增加一次可推送机会；后台成功发送一次提醒后，自动扣减一次。
 
-<img src="docs/screenshot.jpg" alt="小程序截图" width="320" />
+<p>
+  <img src="docs/screenshot.jpg" alt="小程序界面" width="260" />
+  <img src="docs/notification.jpg" alt="订阅消息推送" width="260" />
+</p>
 
 ## 功能
 

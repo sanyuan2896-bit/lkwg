@@ -4,7 +4,7 @@
 
 小程序会展示当前时间段的远行商人商品，并在商品数据更新时通过微信订阅消息提醒用户。订阅消息按微信规则计次：用户每授权一次，就增加一次可推送机会；后台成功发送一次提醒后，自动扣减一次。
 
-![小程序截图](docs/screenshot.jpg)
+<img src="docs/screenshot.jpg" alt="小程序截图" width="320" />
 
 ## 功能
 
@@ -82,10 +82,20 @@
 ## 本地开发
 
 1. 使用微信开发者工具导入项目目录
-2. 确认 `project.config.json` 中的 AppID 正确
-3. 确认云开发环境为 `cloudbase-d9gfw4fls7375ca47`
-4. 部署 `cloudfunctions/` 下的云函数
-5. 在云函数 `sendMerchantNotifications` 中配置环境变量
+2. 将 `project.config.json` 中的 AppID 改成自己的小程序 AppID
+3. 开通微信云开发，并把代码里的云环境 ID 替换成自己的环境
+4. 创建所需数据库集合，并部署 `cloudfunctions/` 下的云函数
+5. 在云函数 `sendMerchantNotifications` 中配置订阅消息所需的环境变量
 6. 编译运行小程序
+
+需要配置的环境变量：
+
+```text
+APPID=你的小程序 AppID
+APPSECRET=你的小程序 AppSecret
+MINIPROGRAM_STATE=developer
+```
+
+`APPSECRET` 只放在云函数环境变量里，不要提交到代码仓库。
 
 如果要在小程序端直接请求外部页面，需要在小程序后台配置 request 合法域名。当前主要抓取逻辑已经放在云函数侧，前端优先读取云端快照。

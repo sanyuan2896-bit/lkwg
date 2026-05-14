@@ -1,15 +1,7 @@
 <view class="page-shell">
   <view class="hero-card panel">
     <view class="hero-banner">
-      <view class="banner-scene">
-        <view class="scene-flagpole"></view>
-        <view class="scene-flag"></view>
-        <view class="scene-building left"></view>
-        <view class="scene-building middle"></view>
-        <view class="scene-tree"></view>
-        <view class="scene-rider"></view>
-        <view class="scene-horse"></view>
-      </view>
+      <image class="banner-image" src="/assets/merchant-banner.jpg" mode="aspectFill" />
     </view>
 
     <view class="hero-row">

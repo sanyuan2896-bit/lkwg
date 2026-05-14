@@ -71,26 +71,6 @@
 
 定时检查最新商品快照。发现新快照后，给仍有订阅次数的用户发送订阅消息，并扣减 `remainingCount`。
 
-## 云开发配置
-
-当前项目使用的云开发环境：
-
-```text
-环境 ID：cloudbase-d9gfw4fls7375ca47
-AppID：wxebd25e88fd861502
-订阅消息模板 ID：zwPG3DQvU8Zji6R4MPhu7vOlURBk1_7Nq6sZ6USEuWA
-```
-
-`sendMerchantNotifications` 需要在云函数环境变量里配置：
-
-```text
-APPID=小程序 AppID
-APPSECRET=小程序 AppSecret
-MINIPROGRAM_STATE=developer
-```
-
-`APPSECRET` 不要写入代码仓库，只放在云函数环境变量里。
-
 ## 数据库集合
 
 - `merchant_subscriptions`：用户订阅记录、剩余次数、最近推送快照
@@ -107,7 +87,3 @@ MINIPROGRAM_STATE=developer
 6. 编译运行小程序
 
 如果要在小程序端直接请求外部页面，需要在小程序后台配置 request 合法域名。当前主要抓取逻辑已经放在云函数侧，前端优先读取云端快照。
-
-## 说明
-
-这个项目目前聚焦在“当前商品展示”和“商品更新提醒”。预测、攻略、历史记录这类功能暂时不做，避免把提醒工具做得太重。

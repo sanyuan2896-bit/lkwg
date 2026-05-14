@@ -1,94 +1,113 @@
-# 洛克王国远行商人提醒小程序
+# 洛克王国远行商人提醒
 
-这是一个微信小程序 MVP，目标是做远行商人当前商品展示和订阅提醒。
+一个用微信小程序和云开发做的远行商人提醒工具。
 
-## 当前范围
+小程序会展示当前时间段的远行商人商品，并在商品数据更新时通过微信订阅消息提醒用户。订阅消息按微信规则计次：用户每授权一次，就增加一次可推送机会；后台成功发送一次提醒后，自动扣减一次。
 
-- 展示远行商人当前时间段商品
-- 固定提醒 `炫彩蛋`、`棱镜球`、`血脉秘药`
-- 通过微信订阅消息 + 云开发实现提醒次数累计和定时推送
+## 功能
 
-明确不做：
+- 展示当前时段的远行商人商品、价格、限购信息和剩余时间
+- 商品数量动态渲染，不写死固定数量
+- 商品图片由云函数抓取并转成小程序可展示的数据
+- 商品数据暂时来自 onebiji 的远行商人页面
+- 商品数据更新后触发订阅消息提醒
+- 支持订阅次数累计和推送后自动扣减
+- 首页保留广告位，方便后续接入变现
 
-- 预测
-- 攻略
-- 本场记录
+## 时间段
 
-## 已实现能力
+远行商人按 4 个时间段展示：
 
-- 首页展示当前时间段商品、价格、限购和剩余时间
-- 商品数据抓取自 onebiji 远行商人页面
-- 商品数量不写死，有几个展示几个
-- 抓取失败时显示“数据更新中”
-- 固定 4 个时间段：
-  - `08:00-12:00`
-  - `12:00-16:00`
-  - `16:00-20:00`
-  - `20:00-24:00`
-- 订阅按钮可拉起微信订阅授权
-- 用户每同意一次，`remainingCount +1`
-- 定时命中固定商品后，发送一次订阅消息并扣减一次次数
-- 广告位保留，后续可接入变现
+- `08:00-12:00`
+- `12:00-16:00`
+- `16:00-20:00`
+- `20:00-24:00`
 
-## 项目结构
+后台定时任务会定期同步当前商品快照；如果某个时间段刚开始时页面暂时没有商品，小程序会显示“数据更新中”。
 
-- `app.*`：全局配置和云开发初始化
-- `pages/index/*`：首页、商品展示、订阅入口
-- `pages/settings/*`：提醒设置、云环境和模板配置
-- `utils/merchant.js`：抓取、时间计算、本地配置
-- `cloudfunctions/*`：云函数
+## 技术栈
 
-## 本地运行
+- 微信小程序原生开发
+- 微信云开发 CloudBase
+- 云函数定时任务
+- 微信订阅消息 HTTP API
+- 云数据库记录订阅次数和商品快照
 
-1. 打开微信开发者工具
-2. 导入项目目录 `E:\AAAdocument\project\lkwg`
-3. 使用当前 AppID：`wxebd25e88fd861502`
-4. 在开发设置里放行 `https://www.onebiji.com`
-5. 编译运行
+## 目录
+
+```text
+.
+├── app.js
+├── app.json
+├── app.wxss
+├── pages/
+│   ├── index/       # 首页、商品展示、订阅入口
+│   └── settings/    # 本地设置页
+├── utils/
+│   └── merchant.js  # 时间段、配置和页面解析工具
+└── cloudfunctions/
+    ├── createMerchantSubscription/
+    ├── getMerchantSnapshot/
+    ├── getMerchantSubscriptionStatus/
+    ├── sendMerchantNotifications/
+    └── syncMerchantSnapshot/
+```
+
+## 云函数
+
+`createMerchantSubscription`
+
+用户允许订阅消息后，写入或更新订阅记录，并将 `remainingCount` 加 1。
+
+`getMerchantSubscriptionStatus`
+
+查询当前用户还剩多少次提醒机会。
+
+`syncMerchantSnapshot`
+
+抓取当前时间段的远行商人商品，并写入 `merchant_snapshots`。
+
+`sendMerchantNotifications`
+
+定时检查最新商品快照。发现新快照后，给仍有订阅次数的用户发送订阅消息，并扣减 `remainingCount`。
 
 ## 云开发配置
 
-- 环境名称：`cloudbase`
-- 环境 ID：`cloudbase-d9gfw4fls7375ca47`
-- 模板 ID：`zwPG3DQvU8Zji6R4MPhu7vOlURBk1_7Nq6sZ6USEuWA`
+当前项目使用的云开发环境：
 
-### 云函数
+```text
+环境 ID：cloudbase-d9gfw4fls7375ca47
+AppID：wxebd25e88fd861502
+订阅消息模板 ID：zwPG3DQvU8Zji6R4MPhu7vOlURBk1_7Nq6sZ6USEuWA
+```
 
-- `createMerchantSubscription`
-- `getMerchantSubscriptionStatus`
-- `syncMerchantSnapshot`
-- `sendMerchantNotifications`
+`sendMerchantNotifications` 需要在云函数环境变量里配置：
 
-### 数据库集合
+```text
+APPID=小程序 AppID
+APPSECRET=小程序 AppSecret
+MINIPROGRAM_STATE=developer
+```
 
-- `merchant_subscriptions`
-- `merchant_snapshots`
+`APPSECRET` 不要写入代码仓库，只放在云函数环境变量里。
 
-## merchant_subscriptions 建议字段
+## 数据库集合
 
-- `openid`
-- `templateId`
-- `goodsNames`
-- `currentGoods`
-- `remainingCount`
-- `slotKey`
-- `rangeText`
-- `stageText`
-- `lastSentSlotKey`
-- `status`
-- `createdAt`
-- `updatedAt`
+- `merchant_subscriptions`：用户订阅记录、剩余次数、最近推送快照
+- `merchant_snapshots`：最近抓取到的商品快照
+- `merchant_runtime_config`：缓存微信 `access_token`
 
-## merchant_snapshots 建议字段
+## 本地开发
 
-- `slotKey`
-- `goods`
-- `rangeText`
-- `fetchedAt`
+1. 使用微信开发者工具导入项目目录
+2. 确认 `project.config.json` 中的 AppID 正确
+3. 确认云开发环境为 `cloudbase-d9gfw4fls7375ca47`
+4. 部署 `cloudfunctions/` 下的云函数
+5. 在云函数 `sendMerchantNotifications` 中配置环境变量
+6. 编译运行小程序
 
-## 当前状态
+如果要在小程序端直接请求外部页面，需要在小程序后台配置 request 合法域名。当前主要抓取逻辑已经放在云函数侧，前端优先读取云端快照。
 
-- CloudBase MCP 已配置并可用
-- 云函数已部署到 `cloudbase-d9gfw4fls7375ca47`
-- 定时触发器已创建
-- 时间段展示、模板时间字段、去重键已统一
+## 说明
+
+这个项目目前聚焦在“当前商品展示”和“商品更新提醒”。预测、攻略、历史记录这类功能暂时不做，避免把提醒工具做得太重。

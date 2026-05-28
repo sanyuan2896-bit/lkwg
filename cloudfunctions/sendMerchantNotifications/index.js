@@ -12,6 +12,7 @@ const TOKEN_COLLECTION = 'merchant_runtime_config'
 const TOKEN_DOC_ID = 'wechat_access_token'
 const TOKEN_EXPIRE_BUFFER_MS = 200 * 1000
 const DEFAULT_MINIPROGRAM_STATE = 'developer'
+const TARGET_GOODS_NAMES = ['炫彩蛋', '棱镜球', '祝福项坠']
 
 function formatDateTime(timestamp) {
   const date = new Date(Number(timestamp) || Date.now())
@@ -103,6 +104,13 @@ function buildSummaryText(goodsNames) {
   }
 
   return `远行商人商品更新：${goodsNames.slice(0, 3).join('、')}`.slice(0, 20)
+}
+
+function findTargetGoods(goods = []) {
+  return goods.filter((item) => {
+    const name = String(item && item.name || '').trim()
+    return TARGET_GOODS_NAMES.some((targetName) => name.includes(targetName))
+  })
 }
 
 function normalizeError(error) {
@@ -268,6 +276,24 @@ exports.main = async () => {
   }
 
   const snapshotHash = snapshot.snapshotHash || buildSnapshotHash(snapshot)
+  const targetGoods = findTargetGoods(snapshot.goods)
+  const targetGoodsNames = targetGoods.map((item) => item.name).filter(Boolean)
+
+  if (!targetGoods.length) {
+    return {
+      matched: 0,
+      sendResults: [],
+      summary: {
+        reason: 'no_target_goods',
+        targetGoodsNames: TARGET_GOODS_NAMES,
+        slotKey: snapshot.slotKey || '',
+        rangeText: snapshot.rangeText || '',
+        snapshotHash,
+        goodsCount: snapshot.goods.length
+      }
+    }
+  }
+
   const { startAt, endAt } = buildRangeTimestamps({
     rangeText: snapshot.rangeText,
     slotKey: snapshot.slotKey || `${buildLocalDateText()}-0`
@@ -280,8 +306,7 @@ exports.main = async () => {
     })
     .get()
 
-  const goodsNames = snapshot.goods.map((item) => item.name).filter(Boolean)
-  const summaryText = buildSummaryText(goodsNames)
+  const summaryText = buildSummaryText(targetGoodsNames)
   const sendResults = []
   const failedResults = []
   let skippedSameSnapshot = 0
@@ -336,6 +361,7 @@ exports.main = async () => {
     rangeText: snapshot.rangeText || '',
     snapshotHash,
     goodsCount: snapshot.goods.length,
+    targetGoodsNames,
     activeSubscriptionCount: subscriptionResult.data.length,
     skippedSameSnapshot,
     attempted,
@@ -361,6 +387,7 @@ exports.main = async () => {
       rangeText: snapshot.rangeText || '',
       snapshotHash,
       goodsCount: snapshot.goods.length,
+      targetGoodsNames,
       activeSubscriptionCount: subscriptionResult.data.length,
       skippedSameSnapshot,
       attempted,

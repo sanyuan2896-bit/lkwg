@@ -34,7 +34,7 @@
     />
 
     <view class="field-label">固定提醒商品</view>
-    <view class="picker input-like">炫彩蛋、棱镜球、血脉秘药</view>
+    <view class="picker input-like">炫彩蛋、棱镜球、祝福项坠</view>
 
     <view class="field-label">云环境 ID</view>
     <input
@@ -65,7 +65,7 @@
 
     <view class="tips">
       <view class="tips-title">云开发说明</view>
-      <view class="tips-text">首页点击订阅后会直接拉起微信订阅授权。用户点允许后，小程序会调用云函数创建提醒任务，当前固定提醒炫彩蛋、棱镜球和血脉秘药。</view>
+      <view class="tips-text">首页点击订阅后会直接拉起微信订阅授权。用户点允许后，小程序会调用云函数创建提醒任务，当前固定提醒炫彩蛋、棱镜球和祝福项坠。</view>
     </view>
 
     <button class="save-button" bindtap="saveSettings">保存设置</button>

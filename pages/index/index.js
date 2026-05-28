@@ -202,8 +202,8 @@ Page({
 
   selectGoods() {
     wx.showModal({
-      title: '商品更新提醒',
-      content: '当前规则是：远行商人商品数据一有更新就提醒，不限定具体商品。',
+      title: '商品说明',
+      content: '当前只提醒指定商品：炫彩蛋、棱镜球、祝福项坠。每同意一次订阅会增加 1 次提醒机会，推送成功后自动扣减。',
       showCancel: false,
       confirmText: '知道了'
     })

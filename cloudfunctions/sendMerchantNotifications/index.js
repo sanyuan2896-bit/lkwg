@@ -12,7 +12,7 @@ const TOKEN_COLLECTION = 'merchant_runtime_config'
 const TOKEN_DOC_ID = 'wechat_access_token'
 const TOKEN_EXPIRE_BUFFER_MS = 200 * 1000
 const DEFAULT_MINIPROGRAM_STATE = 'developer'
-const TARGET_GOODS_NAMES = ['炫彩蛋', '棱镜球', '祝福项坠']
+const TARGET_GOODS_NAMES = ['炫彩', '棱镜球', '祝福项坠']
 
 function formatDateTime(timestamp) {
   const date = new Date(Number(timestamp) || Date.now())

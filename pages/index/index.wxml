@@ -8,7 +8,7 @@
       <view class="hero-copy">
         <view class="hero-kicker">洛克王国 / 远行商人</view>
         <view class="hero-title">远行商人提醒</view>
-        <view class="hero-desc">当前规则是命中指定商品才提醒：炫彩蛋、棱镜球、祝福项坠。支持累计订阅次数，推送成功后自动扣减。</view>
+        <view class="hero-desc">当前规则是命中指定商品才提醒：名称含「炫彩」、棱镜球、祝福项坠。支持累计订阅次数，推送成功后自动扣减。</view>
       </view>
       <view class="hero-badges">
         <view class="hero-badge">{{stageText}}</view>

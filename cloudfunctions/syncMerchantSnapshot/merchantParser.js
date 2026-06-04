@@ -39,7 +39,7 @@ function parseMerchantGoods(html) {
 
   const activeSlot = activeSlotMatch[1]
   const itemMatcher = new RegExp(
-    `<li[^>]+class="[^"]*li_show[^"]*show_${activeSlot}[^"]*"[^>]*data-time="(\\d+)"[^>]*>[\\s\\S]*?<div class="gitem">[\\s\\S]*?<img src="([^"]+)"[^>]*>[\\s\\S]*?<em>限购(\\d+)</em>[\\s\\S]*?<div class="sp-text">[\\s\\S]*?<p><em>([^<]+)</em></p>[\\s\\S]*?<div><em>价格：?(\\d+)\\s*</em>`,
+    `<li[^>]+class="[^"]*li_show[^"]*show_${activeSlot}[^"]*"[^>]*data-time="(\\d+)"[^>]*>[\\s\\S]*?<div class="gitem">[\\s\\S]*?<img src="([^"]+)"[^>]*>[\\s\\S]*?<em>限购(\\d+)</em>[\\s\\S]*?<div class="sp-text">[\\s\\S]*?<p><em[^>]*>([^<]+)</em></p>[\\s\\S]*?<div><em[^>]*>价格：?(\\d+)\\s*</em>`,
     'gi'
   )
 

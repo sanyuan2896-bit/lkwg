@@ -113,6 +113,10 @@ function findTargetGoods(goods = []) {
   })
 }
 
+function getGoodsNames(goods = []) {
+  return goods.map((item) => String(item && item.name || '').trim()).filter(Boolean)
+}
+
 function normalizeError(error) {
   const message = String(error && (error.errMsg || error.message) || 'unknown_error')
   const code = error && (error.errCode || error.code) ? String(error.errCode || error.code) : ''
@@ -268,6 +272,7 @@ exports.main = async () => {
       sendResults: [],
       summary: {
         reason: 'no_snapshot_goods',
+        snapshotGoodsNames: [],
         slotKey: snapshot.slotKey || '',
         rangeText: snapshot.rangeText || '',
         snapshotHash: snapshot.snapshotHash || buildSnapshotHash(snapshot)
@@ -276,8 +281,9 @@ exports.main = async () => {
   }
 
   const snapshotHash = snapshot.snapshotHash || buildSnapshotHash(snapshot)
+  const snapshotGoodsNames = getGoodsNames(snapshot.goods)
   const targetGoods = findTargetGoods(snapshot.goods)
-  const targetGoodsNames = targetGoods.map((item) => item.name).filter(Boolean)
+  const targetGoodsNames = getGoodsNames(targetGoods)
 
   if (!targetGoods.length) {
     return {
@@ -286,6 +292,7 @@ exports.main = async () => {
       summary: {
         reason: 'no_target_goods',
         targetGoodsNames: TARGET_GOODS_NAMES,
+        snapshotGoodsNames,
         slotKey: snapshot.slotKey || '',
         rangeText: snapshot.rangeText || '',
         snapshotHash,
@@ -361,6 +368,7 @@ exports.main = async () => {
     rangeText: snapshot.rangeText || '',
     snapshotHash,
     goodsCount: snapshot.goods.length,
+    snapshotGoodsNames,
     targetGoodsNames,
     activeSubscriptionCount: subscriptionResult.data.length,
     skippedSameSnapshot,
@@ -387,6 +395,7 @@ exports.main = async () => {
       rangeText: snapshot.rangeText || '',
       snapshotHash,
       goodsCount: snapshot.goods.length,
+      snapshotGoodsNames,
       targetGoodsNames,
       activeSubscriptionCount: subscriptionResult.data.length,
       skippedSameSnapshot,
